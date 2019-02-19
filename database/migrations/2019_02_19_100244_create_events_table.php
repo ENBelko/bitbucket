@@ -20,6 +20,7 @@ class CreateEventsTable extends Migration
             $table->string('middle-name');
             $table->string('phone');
             $table->string('email');
+            $table->string('education');
             $table->integer('event_numb');
             $table->string('ip');
             $table->string('utm');

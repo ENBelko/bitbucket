@@ -21,7 +21,7 @@
             'https://www.mykonosgrand.gr/wp-content/uploads/2014/05/Beautiful-Nature-Wallpapers-for-Background-HD-Wallpaper.jpg']
         @endphp
 
-        @for($i = 0;$i <= 5;$i++)
+        @for($i = 0;$i < count($pic);$i++)
 
             <div style="width: 33%;height: 300px" class="card">
                 <div class="card-body">
@@ -73,6 +73,17 @@
                                 <input type="email" name="email" class="form-control" required>
                             </div>
                             <div class="form-group">
+                                <label for="email">Образование</label>
+                                <select name="education" id="edu-select" class="form-control">
+                                    @php $edu = ['Bachelor','Master','PhD'] @endphp
+
+                                    @for($i = 0 ;$i < count($edu);$i++)
+                                        <option value="{{$edu[$i]}}">{{$edu[$i]}}</option>
+                                    @endfor
+
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <input type="hidden" name="event" class="form-control">
                             </div>
                             <input type="submit" value="Отправить" class="btn btn-primary float-right">
@@ -90,9 +101,24 @@
 @endsection
 @section('scripts')
     <script>
-        $(document).on('submit', 'form[name="eventForm"]', (event) => {
+        $(document).on('submit', '#eventForm', (event) => {
+            alert('dfsfs');
             event.preventDefault();
             let data = new FormData(event.currentTarget);
+
+            $.ajax({
+                method: 'POST',
+                url: '{{route('event.store')}}',
+                data: data,
+                contentType: false,
+                processData: false,
+                success: (result) => {
+                    showMsg(result.success);
+                },
+                error: (jqXHR, exception) => {
+                    console.log(jqXHR.responseText);
+                }
+            })
 
         })
     </script>

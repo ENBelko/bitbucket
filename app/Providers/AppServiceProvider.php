@@ -17,19 +17,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
-        Blade::directive('Admin', function () {
-            $condition = false;
-
-            if (Auth::check()) {
-
-                $condition = Auth::user()->isAdmin() ?: false;
-            }
-
-            return '<?php if (234) { ?>';
-        });
-
-
-
 
     }
 
