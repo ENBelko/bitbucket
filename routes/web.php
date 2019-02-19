@@ -12,7 +12,9 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $content = \Illuminate\Support\Facades\DB::table('content')->first();
+
+    return view('welcome',compact('content'));
 });
 
 Auth::routes();
@@ -23,3 +25,4 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/admin', 'AdminController@index')->name('admin');
+Route::Post('/admin/edit', 'AdminController@edit')->name('admin.edit');

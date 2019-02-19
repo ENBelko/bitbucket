@@ -3,6 +3,11 @@
         <a class="navbar-brand" href="{{ url('/') }}">
             {{ config('app.name', 'Laravel') }}
         </a>
+
+
+        @if(auth()->check() && auth()->user()->isAdmin())<a href="{{route('admin')}}">Админка</a> @endif
+        <a id="link-event1" href="#" class="btn" data-toggle="modal" data-target="#exampleModal" onclick="eventFormPrepare(event)">Мероприятие 1</a>
+        <a id="link-event2" href="#" class="btn" data-toggle="modal" data-target="#exampleModal" onclick="eventFormPrepare(event)">Мероприятие 2</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>
         </button>
