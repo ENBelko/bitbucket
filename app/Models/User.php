@@ -27,4 +27,27 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'user_roles');
+
+    }
+
+    public function isAdmin()
+    {
+        if($this->name == 'Admin') return true;/*если зашел под именем админ или есть роль admin*/
+        return $this->hasRole('admin');
+
+    }
+
+    public function hasRole(... $roles)
+    {
+        foreach ($roles as $role) {
+            if ($this->roles->contains('slug', $role)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
