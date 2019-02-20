@@ -16,7 +16,7 @@ const eventFormPrepare = (event) => {
 
     let numb;
     //alert($(event.currentTarget).attr('id'))
-    if($(event.currentTarget).attr('id') == 'link-event1') {
+    if ($(event.currentTarget).attr('id') == 'link-event1') {
         numb = 1;
     } else {
         numb = 2;
@@ -29,12 +29,21 @@ const eventFormPrepare = (event) => {
     modal.find('#img-display').hide();
     modal.find('#event').show();
 
-    modal.find('h5').text('Мероприятие№ '+ numb);
+    modal.find('h5').text('Мероприятие№ ' + numb);
     modal.find('input[name="event"]').val(numb);
 }
 
-const showMsg = (text) => {
+const showMsg = (text, type) => {
+
+    //alert(type);
+    let salert;
+    if (type == 'success' || !type) {
+        salert = 'alert-success';
+    } else if (type == 'error') {
+        salert = 'alert-danger';
+    }
     $('#flashMsg').text(text);
+    $('#flashMsg').removeClass().addClass(salert);
     $('#flashMsg').show();
     $("#flashMsg").fadeIn(10000, function () {
         $("#flashMsg").fadeOut(4500);

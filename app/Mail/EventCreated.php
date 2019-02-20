@@ -2,6 +2,8 @@
 
 namespace App\Mail;
 
+//use http\Env\Request;
+use Illuminate\Http\Request;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
@@ -16,9 +18,11 @@ class EventCreated extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public $eventer;
+
+    public function __construct($eventer)
     {
-        //
+        $this->eventer = $eventer;
     }
 
     /**
@@ -28,6 +32,7 @@ class EventCreated extends Mailable
      */
     public function build()
     {
+        //dd($this->eventer);
         return $this->markdown('mail.event-created');
     }
 }

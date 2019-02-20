@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\EventCreated;
+use App\Jobs\EventOwnerMailJob;
 use App\Mail\EventCreated as EventCreatedMail;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -29,5 +30,7 @@ class SendEventCreatedNotification
     public function handle(EventCreated $event)
     {
         Mail::to($event->eventer->email)->send(new EventCreatedMail($event->eventer));
+        /*отправка очереди организатору*/
+        dispatch(new EventOwnerMailJob($event->eventer));
     }
 }

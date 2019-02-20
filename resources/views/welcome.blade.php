@@ -102,7 +102,7 @@
 @section('scripts')
     <script>
         $(document).on('submit', '#eventForm', (event) => {
-            alert('dfsfs');
+            //alert('dfsfs');
             event.preventDefault();
             let data = new FormData(event.currentTarget);
 
@@ -116,7 +116,12 @@
                     showMsg(result.success);
                 },
                 error: (jqXHR, exception) => {
-                    console.log(jqXHR.responseText);
+                    let verrors = '';
+                    $.each(jqXHR.responseJSON.errors, function (key, value) {
+                        verrors += value;
+                    });
+                    showMsg(verrors, 'error');
+
                 }
             })
 

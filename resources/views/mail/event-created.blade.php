@@ -1,12 +1,10 @@
 @component('mail::message')
-# Introduction
-
-The body of your message.
+Cпасибо что зарегестировались на наше мероприятие№{{$eventer->event_numb}}!
 
 @component('mail::button', ['url' => ''])
-Button Text
+Жмак-жмак
 @endcomponent
 
-Thanks,<br>
+Збазибо,<br>
 {{ config('app.name') }}
 @endcomponent

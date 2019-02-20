@@ -2,9 +2,9 @@
     bottom: 20px;
     right: 10px;
     position: fixed;
-    z-index: 12;
-    background: #7c7c7c;
-    color: #d1f50e;
+    z-index: 9999;
+    /*background: #7c7c7c;
+    color: #d1f50e;*/
     padding: 10px;
     text-align: center;
 }
