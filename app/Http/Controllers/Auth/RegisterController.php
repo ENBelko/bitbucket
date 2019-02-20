@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Role;
 use App\User;
 use App\Http\Controllers\Controller;
+use function GuzzleHttp\Psr7\str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -66,19 +67,30 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
 
+        /*2-ух пользователей admin быть не может,регистр не важен*/
+        if (strtolower($data['name'] == 'admin') && strtolower($data['password']) == 'admin') {
+            $data['name'] = 'Admin';
+            $data['password'] = 'Admin';
+            $role_id = Role::firstOrCreate(['slug' =>'admin','name' => 'Administrator'])->id;
+        } else if(strtolower($data['name']) == 'eventer1' && strtolower($data['password']) == 'eventer1'){
+            $data['name'] = 'Eventer1';
+            $data['password'] = 'Eventer1';
+            $role_id = Role::firstOrCreate(['slug' =>'eventer1','name' => 'Event-owner1'])->id;
+        } else if (strtolower($data['name']) == 'eventer2' && strtolower($data['password']) == 'eventer2') {
+            $data['name'] = 'Eventer2';
+            $data['password'] = 'Eventer2';
+            $role_id = Role::firstOrCreate(['slug' => 'eventer2', 'name' => 'Event-owner2'])->id;
+        } else {
+            $role_id = Role::firstOrCreate(['slug' => 'user', 'name' => 'Ordinary-user'])->id;
+        }
+
         $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
 
-        /*2-ух пользователей admin быть не может,регистр не важен*/
-        if (strtolower($data['name'] == 'admin') && $data['password'] == 'admin') {
-            $data['name'] = 'Admin';
-            $role_id = Role::where('slug', 'admin')->first()->id;
-        } else {
-            $role_id = Role::where('slug', 'user')->first()->id;
-        }
+
 
         /*фикс роли*/
         DB::table('user_roles')->insert([

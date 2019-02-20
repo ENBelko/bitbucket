@@ -34,9 +34,24 @@ class User extends Authenticatable
 
     }
 
+    public function isEventer($numb = null)
+    {
+
+        if ($numb) {
+            if ($this->name == "Eventer$numb") return true;
+            return $this->hasRole("Eventer$numb");
+        } else {
+
+            if ($this->roles()->where('slug', 'like', '%eventer%')->count()) {
+                return true;
+            }
+            return false;
+        }
+    }
+
     public function isAdmin()
     {
-        if($this->name == 'Admin') return true;/*если зашел под именем админ или есть роль admin*/
+        if ($this->name == 'Admin') return true;/*если зашел под именем админ или есть роль admin*/
         return $this->hasRole('admin');
 
     }

@@ -5,10 +5,17 @@
         </a>
 
 
-        @if(auth()->check() && auth()->user()->isAdmin())<a href="{{route('admin')}}">Админка</a> @endif
-        <a id="link-event1" href="#" class="btn" data-toggle="modal" data-target="#exampleModal" onclick="eventFormPrepare(event)">Мероприятие 1</a>
-        <a id="link-event2" href="#" class="btn" data-toggle="modal" data-target="#exampleModal" onclick="eventFormPrepare(event)">Мероприятие 2</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+        @if(auth()->check() && auth()->user()->isAdmin())<a class="btn" href="{{route('admin')}}">Админка</a> @endif
+        @auth
+            @if(auth()->check() && auth()->user()->isEventer())<a id="link-event1" href="#" class="btn">Ваше мероприятие №</a> @endif
+        @else
+            <a id="link-event1" href="#" class="btn" data-toggle="modal" data-target="#exampleModal"
+               onclick="eventFormPrepare(event)">Мероприятие 1</a>
+            <a id="link-event2" href="#" class="btn" data-toggle="modal" data-target="#exampleModal"
+               onclick="eventFormPrepare(event)">Мероприятие 2</a>
+        @endauth
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -32,7 +39,8 @@
                     @endif
                 @else
                     <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::user()->name }} <span class="caret"></span>
                         </a>
 
