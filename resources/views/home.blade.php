@@ -36,17 +36,9 @@
                                     <div class="form-group">
                                         <span>{{$event->phone}}</span>
                                     </div>
-                                    <div class="form-group">
-                                        <span>{{$event->ip}}</span>
-                                    </div>
+
                                 </div>
-                                <div class="card-footer text-center">
-                                    <form action="" method="post">
-                                        @csrf
-                                        <input type="hidden" name="id" value="{{$event->id}}">
-                                        <input type="submit" class="btn btn-danger" value="Удалить">
-                                    </form>
-                                </div>
+
                             </div>
                         @endforeach
                     </div>

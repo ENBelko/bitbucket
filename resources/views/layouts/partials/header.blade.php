@@ -7,7 +7,7 @@
 
         @if(auth()->check() && auth()->user()->isAdmin())<a class="btn" href="{{route('admin')}}">Админка</a> @endif
         @auth
-            @if(auth()->check() && auth()->user()->isEventer())<a id="link-event1" href="#" class="btn">Ваше мероприятие №</a> @endif
+            @if(auth()->check() && auth()->user()->isEventer())<a id="link-event1" href="{{route('home')}}" class="btn">Заявки на ваше мероприятие</a> @endif
         @else
             <a id="link-event1" href="#" class="btn" data-toggle="modal" data-target="#exampleModal"
                onclick="eventFormPrepare(event)">Мероприятие 1</a>

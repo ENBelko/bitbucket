@@ -2,8 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\{Request,Response};
-use Illuminate\Support\Facades\{DB,View};
+use App\Models\Event;
+use Illuminate\Http\{
+    Request, Response
+};
+use Illuminate\Support\Facades\{
+    DB, View
+};
+
 //use Illuminate\View\View;
 
 class AdminController extends Controller
@@ -13,7 +19,7 @@ class AdminController extends Controller
         $this->middleware('Admin');
         /*расшариваем на весь контроллер*/
         $content = DB::table('content');
-        View::share('content',$content);
+        View::share('content', $content);
 
     }
 
@@ -21,7 +27,7 @@ class AdminController extends Controller
     {
         $content = \view()->shared('content')->first();
 
-        return view('admin.index',compact('content'));
+        return view('admin.index', compact('content'));
     }
 
     public function edit(Request $request, Response $response)
@@ -38,5 +44,14 @@ class AdminController extends Controller
 
         return $response->setContent(['success' => 'Данные обновлены']);
 
+    }
+
+    public function eventDelete(Request $request, Response $response)
+    {
+        $event = Event::find($request->get('id'));
+        $event->delete();
+
+        return $response->setContent(['success' => 'Мероприятие удалено!',
+            'id' => $request->get('id')]);
     }
 }

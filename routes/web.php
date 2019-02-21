@@ -26,5 +26,6 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/admin', 'AdminController@index')->name('admin');
 Route::Post('/admin/edit', 'AdminController@edit')->name('admin.edit');
+Route::Post('/admin/event/delete', 'AdminController@eventDelete')->name('admin.event.delete');
 
 Route::Post('/event/store', 'EventController@store')->name('event.store');

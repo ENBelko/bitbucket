@@ -24,6 +24,32 @@
             </div>
         </form>
     </div>
+    <h1>Заявки на мероприятия</h1>
+    <div id="events" style="display: flex;flex-wrap: wrap">
+        @foreach(DB::table('events')->get() as $event)
+            <div id="ev_{{$event->id}}" class="card" style="width: 33%">
+                <div class="card-header">Заявка от {{$event->name}}, мероприятие №{{$event->event_numb}}</div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <span>{{$event->email}}</span>
+                    </div>
+                    <div class="form-group">
+                        <span>{{$event->phone}}</span>
+                    </div>
+                    <div class="form-group">
+                        <span>{{$event->ip}}</span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <form id="eventDelete" action="" method="POST">
+                        @csrf
+                        <input type="hidden" name="id" value="{{$event->id}}">
+                        <input type="submit" class="btn btn-danger" value="Удалить">
+                    </form>
+                </div>
+            </div>
+        @endforeach
+    </div>
 @endsection
 
 @section('scripts')
@@ -33,6 +59,29 @@
     </script>
 
     <script>
+        /*удаление события*/
+        $(document).on('submit', '#eventDelete', (event) => {
+            event.preventDefault();
+            let data = new FormData(event.currentTarget);
+
+            //alert(data.title)
+            $.ajax({
+                method: 'POST',
+                url: '{{route('admin.event.delete')}}',
+                data: data,
+                contentType: false,
+                processData: false,
+                success: (result) => {
+                    $('#ev_'+result.id).remove();
+                    showMsg(result.success);
+                },
+                error: (jqHXR, exception) => {
+                    console.log(jqHXR.responseText);
+                }
+            })
+
+        })
+        /*редачим контент*/
         $(document).on('submit', 'form[name="contentForm"]', (event) => {
             event.preventDefault();
             let data = new FormData(event.currentTarget);
