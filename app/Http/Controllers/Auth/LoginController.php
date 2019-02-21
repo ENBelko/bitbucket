@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
@@ -49,4 +51,14 @@ class LoginController extends Controller
         request()->merge([$fieldName => $identity]);
         return $fieldName;
     }
+
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        //throw ValidationException::withMessages(
+          return  redirect()->back()
+              ->withInput($request->only('identity', 'remember'))
+              ->withErrors(['identity' => [trans('auth.failed')],
+        ]);
+    }
+
 }

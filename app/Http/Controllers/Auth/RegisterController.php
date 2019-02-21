@@ -69,8 +69,8 @@ class RegisterController extends Controller
 
         /*2-ух пользователей admin быть не может,регистр не важен*/
         if (strtolower($data['name'] == 'admin') && strtolower($data['password']) == 'admin') {
-            $data['name'] = 'Admin';
-            $data['password'] = 'Admin';
+            /*$data['name'] = 'Admin';
+            $data['password'] = 'Admin';*/
             $role_id = Role::firstOrCreate(['slug' =>'admin','name' => 'Administrator'])->id;
         } else if(strtolower($data['name']) == 'eventer1' && strtolower($data['password']) == 'eventer1'){
             $data['name'] = 'Eventer1';
